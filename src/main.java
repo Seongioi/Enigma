@@ -97,6 +97,7 @@ public class main {
         return decrypted;
     }
 
+    //gets moving letter on moving part of the rotor
     public static String findKey(String rotor, String op, String loc)
     {
         if(rotor.equals("right"))
@@ -127,6 +128,7 @@ public class main {
         return op;
     }
 
+    //gets the letter on constant side of rotor
     public static String findOG(String rotor, String op, String loc)
     {
         if(rotor.equals("right"))
@@ -157,6 +159,7 @@ public class main {
         return op;
     }
 
+    //gets letter to reflector
     public static String reflector(String op,String loc)
     {
         for (int i = 0; i<reflector.size(); i++)
@@ -168,6 +171,7 @@ public class main {
         return op;
     }
 
+    //gets the reverse reflector
     public static String reflectorR(String op,String loc)
     {
         for (int i = 0; i<reflector.size(); i++)
@@ -179,6 +183,7 @@ public class main {
         return op;
     }
 
+    //rotates the rotors after every character
     public static void rotate()
     {
         String tempKEY = rightRotor.get(0).key;
@@ -213,6 +218,7 @@ public class main {
         }
     }
 
+    //allows user to choose the rotor used to encrypt message, NOT SUPPORTED IN THIS VERSION
     public static void setRotors(int left, int middle, int right)
     {
         if(left==1)
@@ -247,6 +253,7 @@ public class main {
             rightRotor = rotor5;
     }
 
+    //code for setting initial rotor location, not supported at the moment
     public static void setRotorLoc(int left, int middle, int right)
     {
         for (int i = 0; i<left; i++)
@@ -284,6 +291,7 @@ public class main {
     public static void main(String[] args) {
         // 	System.out.println ("Enigma(rip off): only works with letters, numbers and symbols will not be encrypted");
         int add = 0;
+        //this will set up all rotors and and reflectors
         for (int i = 65; i<91; i++)
         {
             rotor1.add(new Sets((char)i+"" ,rotor1key.charAt(add)+""));
@@ -296,11 +304,6 @@ public class main {
             add++;
         }
 
-//		for (int i = 0; i<rotor5.size(); i++)
-//		{
-//			System.out.println (rotor1.get(i));
-//		}
-
         Scanner kb = new Scanner(System.in);
 
         System.out.println ("what is your message?");
@@ -308,6 +311,7 @@ public class main {
 
         message = message.toUpperCase();
 
+        //NO SUPPORT FOR SETTING ROTORS AT THE MOMENT
         /*System.out.println ("select 3 rotors (1-5)");
         int left = kb.nextInt();
         int middle = kb.nextInt();
@@ -316,6 +320,7 @@ public class main {
         */
         setRotors(1,2,3);
 
+        //SETTING ROTOR LOCATION NOT SUPPORTED AT THE MOMENT
         /*System.out.println ("set rotor loc (0-25)");
         left = kb.nextInt();
         middle = kb.nextInt();
@@ -324,14 +329,13 @@ public class main {
         */
         setRotorLoc(0,0,0);
 
-        /*System.out.println ("what reflector (beta,gamma)");
+        System.out.println ("what reflector (beta,gamma)");
         if(kb.next().equals("beta"))
         {
             reflector=reflectorBeta;
         }else {
             reflector = reflectorGamma;
-        }*/
-        reflector=reflectorBeta;
+        }
 
         System.out.println("encrypt(e) or decrypt(d)");
         if(kb.next().equals("e"))
