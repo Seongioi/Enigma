@@ -35,29 +35,28 @@ public class main {
 
     public static String encrypt(String in)
     {
-        in = in.toUpperCase();
         String encrypted = "";
         int test = 0;
         while(in.length()>0)
         {
             String temp = in.substring(0,1);
             String check = temp;
-//			System.out.println ("run number : " + ++test);
-//			System.out.println (temp);
+			System.out.println ("run number : " + ++test);
+			System.out.println (temp);
             temp = findKey("right",temp,"encryK1");
-//			System.out.println (temp);
+			System.out.println (temp);
             temp = findKey("middle",temp,"encryK2");
-//			System.out.println (temp);
+			System.out.println (temp);
             temp = findKey("left",temp,"encryK3");
-//			System.out.println (temp);
+			System.out.println (temp);
             temp = reflector(temp , "encryR");
-//			System.out.println (temp);
+			System.out.println (temp);
             temp = findOG("left",temp,"encryO1");
-//			System.out.println (temp);
+			System.out.println (temp);
             temp = findOG("middle",temp,"encryO2");
-//			System.out.println (temp);
+			System.out.println (temp);
             temp = findOG("right",temp,"encryO3");
-//			System.out.println (temp);
+			System.out.println (temp);
             encrypted += temp;
             if(!temp.equals(check))
                 rotate();
@@ -68,31 +67,28 @@ public class main {
 
     public static String decrypt(String in)
     {
-        in = in.toUpperCase();
         String decrypted = "";
         int test = 0;
         while(in.length()>0)
         {
             String temp = in.substring(0,1);
             String check = temp;
-//			System.out.println ("run number : " + ++test);
-//			System.out.println (temp);
-            temp = findOG("left",temp, "decryO1");
-            temp = findOG("middle",temp, "decryO2");
-            temp = findOG("right",temp, "decryO3");
-            temp = reflectorR(temp, "decryR");
-            temp = findKey("right",temp, "decryK1");
-//			System.out.println (temp);
-            temp = findKey("middle",temp, "decryK2");
-//			System.out.println (temp);
-            temp = findKey("left",temp, "decryK3");
-//			System.out.println (temp);
-//			System.out.println (temp);
-
-//			System.out.println (temp);
-
-//			System.out.println (temp);
-//			System.out.println (temp);
+            System.out.println ("run number : " + ++test);
+            System.out.println (temp);
+            temp = findKey("right",temp,"encryK1");
+            System.out.println (temp);
+            temp = findKey("middle",temp,"encryK2");
+            System.out.println (temp);
+            temp = findKey("left",temp,"encryK3");
+            System.out.println (temp);
+            temp = reflectorR(temp , "encryR");
+            System.out.println (temp);
+            temp = findOG("left",temp,"encryO1");
+            System.out.println (temp);
+            temp = findOG("middle",temp,"encryO2");
+            System.out.println (temp);
+            temp = findOG("right",temp,"encryO3");
+            System.out.println (temp);
             decrypted += temp;
             if(!temp.equals(check))
                 rotate();
@@ -310,68 +306,38 @@ public class main {
         System.out.println ("what is your message?");
         String message = kb.nextLine();
 
-        System.out.println ("select 3 rotors (1-5)");
+        message = message.toUpperCase();
+
+        /*System.out.println ("select 3 rotors (1-5)");
         int left = kb.nextInt();
         int middle = kb.nextInt();
         int right = kb.nextInt();
         setRotors(left,middle,right);
+        */
+        setRotors(1,2,3);
 
-        System.out.println ("set rotor loc (0-25)");
+        /*System.out.println ("set rotor loc (0-25)");
         left = kb.nextInt();
         middle = kb.nextInt();
         right = kb.nextInt();
         setRotorLoc(left,middle,right);
+        */
+        setRotorLoc(0,0,0);
 
-
-        System.out.println ("what reflector (beta,gamma)");
+        /*System.out.println ("what reflector (beta,gamma)");
         if(kb.next().equals("beta"))
         {
             reflector=reflectorBeta;
-        }else{
-            reflector=reflectorGamma;
-        }
-//
-//		for (int i = 0; i<leftRotor.size(); i++)
-//		{
-//			System.out.println ("left : " + leftRotor.get(i));
-//		}
-//		for (int i = 0; i<middleRotor.size(); i++)
-//		{
-//			System.out.println ("middle : " + middleRotor.get(i));
-//		}
-//		for (int i = 0; i<rightRotor.size(); i++)
-//		{
-//			System.out.println ("right : " + rightRotor.get(i));
-//		}
-//		for (int i = 0; i<reflector.size(); i++)
-//		{
-//			System.out.println ("reflector : " + reflector.get(i));
-//		}
-//
-//
-//		for (int i = 0; i<26*24; i++)
-//			rotate();
-//
-//		for (int i = 0; i<leftRotor.size(); i++)
-//		{
-//			System.out.println ("left : " + leftRotor.get(i));
-//		}
-//		for (int i = 0; i<middleRotor.size(); i++)
-//		{
-//			System.out.println ("middle : " + middleRotor.get(i));
-//		}
-//		for (int i = 0; i<rightRotor.size(); i++)
-//		{
-//			System.out.println ("right : " + rightRotor.get(i));
-//		}
-//		for (int i = 0; i<reflector.size(); i++)
-//		{
-//			System.out.println ("reflector : " + reflector.get(i));
-//		}
+        }else {
+            reflector = reflectorGamma;
+        }*/
+        reflector=reflectorBeta;
 
         System.out.println("encrypt(e) or decrypt(d)");
-        System.out.println (encrypt(message));
-        System.out.println ("your message: \n" + decrypt(message));
+        if(kb.next().equals("e"))
+            System.out.println ("your encrypted message: \n" + encrypt(message));
+        else
+            System.out.println ("your message: \n" + decrypt(message));
 
 
 
