@@ -5,14 +5,14 @@ import java.util.Scanner;
  * Created by seong on 5/6/2017.
  */
 public class main {
-    private static String rotor1key = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
-    private static String rotor2key = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
-    private static String rotor3key = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
-    private static String rotor4key = "ESOVPZJAYQUIOHXLNFTGKDCMWB";
-    private static String rotor5key = "VZBRGITYUPSDNHLXAWMJQOFECK";
+    private static String rotor1key = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"; //Enigma I, rotor I
+    private static String rotor2key = "AJDKSIRUXBLHWTMCQGZNPYFVOE"; //Enigma I, rotor II
+    private static String rotor3key = "BDFHJLCPRTXVZNYEIWGAKMUSQO"; //Enigma I, rotor III
+    private static String rotor4key = "ESOVPZJAYQUIRHXLNFTGKDCMWB"; //M3 Army, rotor IV
+    private static String rotor5key = "VZBRGITYUPSDNHLXAWMJQOFECK"; //M3 Army, rotor V
 
-    private static String beta = "LEYJVCNIXWPBQMDRTAKZGFUHOS";
-    private static String gamma = "FSOKANUERHMBTIYCWLQPZXVGJD";
+    private static String beta = "LEYJVCNIXWPBQMDRTAKZGFUHOS"; //M4 R2, rotor Beta
+    private static String gamma = "FSOKANUERHMBTIYCWLQPZXVGJD"; //M4 R2, rotor Gamma
 
     private static ArrayList<Sets> rotor1 = new ArrayList<Sets>();
     private static ArrayList<Sets> rotor2 = new ArrayList<Sets>();
@@ -254,6 +254,7 @@ public class main {
     }
 
     //code for setting initial rotor location, not supported at the moment
+    /*may not need...
     public static void setRotorLoc(int left, int middle, int right)
     {
         for (int i = 0; i<left; i++)
@@ -284,6 +285,7 @@ public class main {
             largeWheel++;
         }
     }
+    */
 
     /**
      * @param args the command line arguments
@@ -311,23 +313,22 @@ public class main {
 
         message = message.toUpperCase();
 
-        //NO SUPPORT FOR SETTING ROTORS AT THE MOMENT
-        /*System.out.println ("select 3 rotors (1-5)");
+        //pick which rotors to use
+        System.out.println ("select 3 rotors (1-5)");
         int left = kb.nextInt();
         int middle = kb.nextInt();
         int right = kb.nextInt();
         setRotors(left,middle,right);
-        */
-        setRotors(1,2,3);
 
-        //SETTING ROTOR LOCATION NOT SUPPORTED AT THE MOMENT
-        /*System.out.println ("set rotor loc (0-25)");
+        //SETTING ROTOR LOCATION
+        System.out.println ("set rotor loc (0-25)");
         left = kb.nextInt();
         middle = kb.nextInt();
         right = kb.nextInt();
-        setRotorLoc(left,middle,right);
-        */
-        setRotorLoc(0,0,0);
+        int turns = left + middle*25 + right * 25 * 25;
+        for (int i = 0; i < turns; i++) {
+            rotate();
+        }
 
         System.out.println ("what reflector (beta,gamma)");
         if(kb.next().equals("beta"))
