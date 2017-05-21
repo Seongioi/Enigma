@@ -23,6 +23,8 @@ public class main {
     private static ArrayList<Sets> reflectorBeta = new ArrayList<Sets>();
     private static ArrayList<Sets> reflectorGamma = new ArrayList<Sets>();
 
+    private static ArrayList<Sets> plugBoard = new ArrayList<Sets>();
+
     private static ArrayList<Sets> leftRotor = new ArrayList<Sets>();
     private static ArrayList<Sets> middleRotor = new ArrayList<Sets>();
     private static ArrayList<Sets> rightRotor = new ArrayList<Sets>();
@@ -31,6 +33,7 @@ public class main {
     private static int smallWheel = 0;
     private static int midWheel = 0;
     private static int largeWheel = 0;
+    private static boolean usePlug = false;
 
 
     public static String encrypt(String in)
@@ -43,6 +46,10 @@ public class main {
             String check = temp;
 			System.out.println ("run number : " + ++test);
 			System.out.println (temp);
+			if(usePlug){
+			    System.out.println("using plugboard");
+			    temp = matchPlug(temp);
+            }
             temp = findKey("right",temp,"encryK1");
 			System.out.println (temp);
             temp = findKey("middle",temp,"encryK2");
@@ -57,6 +64,9 @@ public class main {
 			System.out.println (temp);
             temp = findOG("right",temp,"encryO3");
 			System.out.println (temp);
+            if(usePlug){
+                temp = matchPlugR(temp);
+            }
             encrypted += temp;
             if(!temp.equals(check))
                 rotate();
@@ -75,6 +85,9 @@ public class main {
             String check = temp;
             System.out.println ("run number : " + ++test);
             System.out.println (temp);
+            if(usePlug){
+                temp = matchPlug(temp);
+            }
             temp = findKey("right",temp,"encryK1");
             System.out.println (temp);
             temp = findKey("middle",temp,"encryK2");
@@ -89,6 +102,9 @@ public class main {
             System.out.println (temp);
             temp = findOG("right",temp,"encryO3");
             System.out.println (temp);
+            if(usePlug){
+                temp = matchPlugR(temp);
+            }
             decrypted += temp;
             if(!temp.equals(check))
                 rotate();
@@ -180,6 +196,28 @@ public class main {
                 return reflector.get(i).og;
         }
         System.out.println("ERROR " + op + " : " + loc);
+        return op;
+    }
+
+    public static String matchPlugR(String op)
+    {
+        for (int i = 0; i<plugBoard.size(); i++)
+        {
+            if(plugBoard.get(i).og.equals(op))
+                return plugBoard.get(i).key;
+        }
+        System.out.println("ERROR " + op);
+        return op;
+    }
+
+    public static String matchPlug(String op)
+    {
+        for (int i = 0; i<plugBoard.size(); i++)
+        {
+            if(plugBoard.get(i).key.equals(op))
+                return plugBoard.get(i).og;
+        }
+        System.out.println("ERROR " + op);
         return op;
     }
 
@@ -308,20 +346,39 @@ public class main {
 
         Scanner kb = new Scanner(System.in);
 
+        //get message from user
         System.out.println ("what is your message?");
         String message = kb.nextLine();
 
         message = message.toUpperCase();
 
+        //ask user if they want to use the plug board
+        System.out.println("would you like to use the plugboard? \"y\" for yes and \"n\" for no");
+        String plug;
+        plug = kb.nextLine();
+        if(plug.equals("y")){
+            System.out.println("enter the connections matching \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"");
+            plug = kb.nextLine();
+            plug = plug.toUpperCase();
+            add = 0;
+            for (int i = 65; i<91; i++)
+            {
+                plugBoard.add(new Sets((char)i+"" ,plug.charAt(add)+""));
+                add++;
+            }
+            usePlug = true;
+        }
+
+
         //pick which rotors to use
-        System.out.println ("select 3 rotors (1-5)");
+        System.out.println ("select 3 rotors (1-5)\nexample input \"1 2 3\"");
         int left = kb.nextInt();
         int middle = kb.nextInt();
         int right = kb.nextInt();
         setRotors(left,middle,right);
 
         //SETTING ROTOR LOCATION
-        System.out.println ("set rotor loc (0-25)");
+        System.out.println ("set rotor loc (0-25)\nexample input \"0 0 0\"");
         left = kb.nextInt();
         middle = kb.nextInt();
         right = kb.nextInt();
@@ -330,7 +387,7 @@ public class main {
             rotate();
         }
 
-        System.out.println ("what reflector (beta,gamma)");
+        System.out.println ("pick reflector (beta,gamma)");
         if(kb.next().equals("beta"))
         {
             reflector=reflectorBeta;
