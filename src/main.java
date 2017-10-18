@@ -44,26 +44,16 @@ public class main {
         {
             String temp = in.substring(0,1);
             String check = temp;
-			System.out.println ("run number : " + ++test);
-			System.out.println (temp);
 			if(usePlug){
-			    System.out.println("using plugboard");
 			    temp = matchPlug(temp);
             }
             temp = findKey("right",temp,"encryK1");
-			System.out.println (temp);
             temp = findKey("middle",temp,"encryK2");
-			System.out.println (temp);
             temp = findKey("left",temp,"encryK3");
-			System.out.println (temp);
             temp = reflector(temp , "encryR");
-			System.out.println (temp);
             temp = findOG("left",temp,"encryO1");
-			System.out.println (temp);
             temp = findOG("middle",temp,"encryO2");
-			System.out.println (temp);
             temp = findOG("right",temp,"encryO3");
-			System.out.println (temp);
             if(usePlug){
                 temp = matchPlugR(temp);
             }
@@ -83,25 +73,16 @@ public class main {
         {
             String temp = in.substring(0,1);
             String check = temp;
-            System.out.println ("run number : " + ++test);
-            System.out.println (temp);
             if(usePlug){
                 temp = matchPlug(temp);
             }
             temp = findKey("right",temp,"encryK1");
-            System.out.println (temp);
             temp = findKey("middle",temp,"encryK2");
-            System.out.println (temp);
             temp = findKey("left",temp,"encryK3");
-            System.out.println (temp);
             temp = reflectorR(temp , "encryR");
-            System.out.println (temp);
             temp = findOG("left",temp,"encryO1");
-            System.out.println (temp);
             temp = findOG("middle",temp,"encryO2");
-            System.out.println (temp);
             temp = findOG("right",temp,"encryO3");
-            System.out.println (temp);
             if(usePlug){
                 temp = matchPlugR(temp);
             }
