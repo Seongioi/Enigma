@@ -1,3 +1,5 @@
+import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,26 +16,21 @@ public class main {
     private static String beta = "LEYJVCNIXWPBQMDRTAKZGFUHOS"; //M4 R2, rotor Beta
     private static String gamma = "FSOKANUERHMBTIYCWLQPZXVGJD"; //M4 R2, rotor Gamma
 
-    private static ArrayList<Sets> rotor1 = new ArrayList<Sets>();
-    private static ArrayList<Sets> rotor2 = new ArrayList<Sets>();
-    private static ArrayList<Sets> rotor3 = new ArrayList<Sets>();
-    private static ArrayList<Sets> rotor4 = new ArrayList<Sets>();
-    private static ArrayList<Sets> rotor5 = new ArrayList<Sets>();
 
-    private static ArrayList<Sets> reflectorBeta = new ArrayList<Sets>();
-    private static ArrayList<Sets> reflectorGamma = new ArrayList<Sets>();
+    private static ArrayList<Sets> reflectorBeta = new ArrayList<>();
+    private static ArrayList<Sets> reflectorGamma = new ArrayList<>();
 
-    private static ArrayList<Sets> plugBoard = new ArrayList<Sets>();
+    private static ArrayList<Sets> plugBoard = new ArrayList<>();
 
-    private static ArrayList<Sets> leftRotor = new ArrayList<Sets>();
-    private static ArrayList<Sets> middleRotor = new ArrayList<Sets>();
-    private static ArrayList<Sets> rightRotor = new ArrayList<Sets>();
-    private static ArrayList<Sets> reflector = new ArrayList<Sets>();
+    private static ArrayList<Sets> leftRotor = new ArrayList<>();
+    private static ArrayList<Sets> middleRotor = new ArrayList<>();
+    private static ArrayList<Sets> rightRotor = new ArrayList<>();
+    private static ArrayList<Sets> reflector = new ArrayList<>();
 
     private static int smallWheel = 0;
     private static int midWheel = 0;
     private static int largeWheel = 0;
-    private static boolean usePlug = false;
+    public static boolean usePlug = false;
 
 
     public static String encrypt(String in)
@@ -121,7 +118,7 @@ public class main {
                     return leftRotor.get(i).key;
             }
         }
-        System.out.println("ERROR " + op + " : " + loc);
+        //System.out.println("ERROR " + op + " : " + loc);
         return op;
     }
 
@@ -152,7 +149,7 @@ public class main {
                     return leftRotor.get(i).og;
             }
         }
-        System.out.println("ERROR " + op + " : " + loc);
+        //System.out.println("ERROR " + op + " : " + loc);
         return op;
     }
 
@@ -164,7 +161,7 @@ public class main {
             if(reflector.get(i).og.equals(op))
                 return reflector.get(i).key;
         }
-        System.out.println("ERROR " + op + " : " + loc);
+        //System.out.println("ERROR " + op + " : " + loc);
         return op;
     }
 
@@ -176,7 +173,7 @@ public class main {
             if(reflector.get(i).key.equals(op))
                 return reflector.get(i).og;
         }
-        System.out.println("ERROR " + op + " : " + loc);
+        //System.out.println("ERROR " + op + " : " + loc);
         return op;
     }
 
@@ -240,149 +237,255 @@ public class main {
     //allows user to choose the rotor used to encrypt message, NOT SUPPORTED IN THIS VERSION
     public static void setRotors(int left, int middle, int right)
     {
-        if(left==1)
-            leftRotor = rotor1;
-        if(left==2)
-            leftRotor = rotor2;
-        if(left==3)
-            leftRotor = rotor3;
-        if(left==4)
-            leftRotor = rotor4;
-        if(left==5)
-            leftRotor = rotor5;
-        if(middle==1)
-            middleRotor = rotor1;
-        if(middle==2)
-            middleRotor = rotor2;
-        if(middle==3)
-            middleRotor = rotor3;
-        if(middle==4)
-            middleRotor = rotor4;
-        if(middle==5)
-            middleRotor = rotor5;
-        if(right==1)
-            rightRotor = rotor1;
-        if(right==2)
-            rightRotor = rotor2;
-        if(right==3)
-            rightRotor = rotor3;
-        if(right==4)
-            rightRotor = rotor4;
-        if(right==5)
-            rightRotor = rotor5;
-    }
-
-    //code for setting initial rotor location, not supported at the moment
-    /*may not need...
-    public static void setRotorLoc(int left, int middle, int right)
-    {
-        for (int i = 0; i<left; i++)
-        {
-            String tempKEY = leftRotor.get(0).key;
-            for (int n = 0; n<25; n++) {
-                leftRotor.get(i).key = leftRotor.get(i+1).key;
-            }
-            leftRotor.get(25).key = tempKEY;
-            smallWheel++;
-        }
-        for (int i = 0; i<middle; i++)
-        {
-            String tempKEY = middleRotor.get(0).key;
-            for (int n = 0; n<25; n++) {
-                middleRotor.get(i).key = middleRotor.get(i+1).key;
-            }
-            middleRotor.get(25).key = tempKEY;
-            midWheel++;
-        }
-        for (int i = 0; i<right; i++)
-        {
-            String tempKEY = rightRotor.get(0).key;
-            for (int n = 0; n<25; n++) {
-                rightRotor.get(i).key = rightRotor.get(i+1).key;
-            }
-            rightRotor.get(25).key = tempKEY;
-            largeWheel++;
-        }
-    }
-    */
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // 	System.out.println ("Enigma(rip off): only works with letters, numbers and symbols will not be encrypted");
         int add = 0;
-        //this will set up all rotors and and reflectors
-        for (int i = 65; i<91; i++)
-        {
-            rotor1.add(new Sets((char)i+"" ,rotor1key.charAt(add)+""));
-            rotor2.add(new Sets((char)i+"" ,rotor2key.charAt(add)+""));
-            rotor3.add(new Sets((char)i+"" ,rotor3key.charAt(add)+""));
-            rotor4.add(new Sets((char)i+"" ,rotor4key.charAt(add)+""));
-            rotor5.add(new Sets((char)i+"" ,rotor5key.charAt(add)+""));
-            reflectorBeta.add(new Sets((char)i+"" ,beta.charAt(add)+""));
-            reflectorGamma.add(new Sets((char)i+"" ,gamma.charAt(add)+""));
-            add++;
-        }
 
-        Scanner kb = new Scanner(System.in);
-
-        //get message from user
-        System.out.println ("what is your message?");
-        String message = kb.nextLine();
-
-        message = message.toUpperCase();
-
-        //ask user if they want to use the plug board
-        System.out.println("would you like to use the plugboard? \"y\" for yes and \"n\" for no");
-        String plug;
-        plug = kb.nextLine();
-        if(plug.equals("y")){
-            System.out.println("enter the connections matching \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"");
-            plug = kb.nextLine();
-            plug = plug.toUpperCase();
-            add = 0;
-            for (int i = 65; i<91; i++)
-            {
-                plugBoard.add(new Sets((char)i+"" ,plug.charAt(add)+""));
+        if(left==1)
+            for (int i = 65; i<91; i++) {
+                leftRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor1key.charAt(add)) ) );
                 add++;
             }
-            usePlug = true;
+        if(left==2)
+            for (int i = 65; i<91; i++) {
+                leftRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor2key.charAt(add)) ) );
+                add++;
+            }
+        if(left==3)
+            for (int i = 65; i<91; i++) {
+                leftRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor3key.charAt(add)) ) );
+                add++;
+            }
+        if(left==4)
+            for (int i = 65; i<91; i++) {
+                leftRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor4key.charAt(add)) ) );
+                add++;
+            }
+        if(left==5)
+            for (int i = 65; i<91; i++) {
+                leftRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor5key.charAt(add)) ) );
+                add++;
+            }
+
+        add = 0;
+
+        if(middle==1)
+            for (int i = 65; i<91; i++) {
+                middleRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor1key.charAt(add)) ) );
+                add++;
+            }
+        if(middle==2)
+            for (int i = 65; i<91; i++) {
+                middleRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor2key.charAt(add)) ) );
+                add++;
+            }
+        if(middle==3)
+            for (int i = 65; i<91; i++) {
+                middleRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor3key.charAt(add)) ) );
+                add++;
+            }
+        if(middle==4)
+            for (int i = 65; i<91; i++) {
+                middleRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor4key.charAt(add)) ) );
+                add++;
+            }
+        if(middle==5)
+            for (int i = 65; i<91; i++) {
+                middleRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor5key.charAt(add)) ) );
+                add++;
+            }
+
+        add = 0;
+
+        if(right==1)
+            for (int i = 65; i<91; i++) {
+                rightRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor1key.charAt(add)) ) );
+                add++;
+            }
+        if(right==2)
+            for (int i = 65; i<91; i++) {
+                rightRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor2key.charAt(add)) ) );
+                add++;
+            }
+        if(right==3)
+            for (int i = 65; i<91; i++) {
+                rightRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor3key.charAt(add)) ) );
+                add++;
+            }
+        if(right==4)
+            for (int i = 65; i<91; i++) {
+                rightRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor4key.charAt(add)) ) );
+                add++;
+            }
+        if(right==5)
+            for (int i = 65; i<91; i++) {
+                rightRotor.add( new Sets( String.valueOf((char)i), String.valueOf(rotor5key.charAt(add)) ) );
+                add++;
+            }
+    }
+
+    public static void setReflectorBeta(){
+        int add = 0;
+        for (int i = 65; i<91; i++) {
+            reflector.add( new Sets( String.valueOf((char)i), String.valueOf(beta.charAt(add)) ) );
+            add++;
+        }
+    }
+
+    public static void setReflectorGamma(){
+        int add = 0;
+        for (int i = 65; i<91; i++) {
+            reflector.add( new Sets( String.valueOf((char)i), String.valueOf(gamma.charAt(add)) ) );
+            add++;
+        }
+    }
+    /**
+     * @param args the command line arguments, args = "inputfile" "outputfile"
+     */
+    public static void main(String[] args) {
+        if(args.length == 0){
+            runComandline();
+        } else {
+            runFiles(args);
+        }
+    }
+
+    private static void setUp(){
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("This will only encrypt letters, all letters converted to uppercase");
+
+        //Set plug board
+        System.out.println("would you like to use the plugboard? \"y\" for yes and \"n\" for no");
+        try{
+            if(input.readLine().equals("y")){
+                System.out.println("enter the connections matching \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\" \n");
+                String plug = input.readLine();
+                plug = plug.toUpperCase();
+                int add = 0;
+                for (int i = 65; i<91; i++)
+                {
+                    plugBoard.add( new Sets( String.valueOf((char)i) ,String.valueOf(plug.charAt(add)) ) );
+                    add++;
+                }
+                usePlug = true;
+                System.out.println("Plug board connected");
+            }
+        } catch (IOException e){
+            System.out.println("ERROR: Input error");
         }
 
+        //Set rotors
+        System.out.println ("select 3 rotors (1-5) (example input: \"1 2 3\")");
+        try {
+            String temp = input.readLine();
+            String rotors[] = temp.split("\\s");
+            setRotors(Integer.parseInt(rotors[0]),Integer.parseInt(rotors[1]),Integer.parseInt(rotors[2]));
+            System.out.println("Rotors set");
+        } catch (IOException e){
+            System.out.println("ERROR: Input error");
+        }
 
-        //pick which rotors to use
-        System.out.println ("select 3 rotors (1-5)\nexample input \"1 2 3\"");
-        int left = kb.nextInt();
-        int middle = kb.nextInt();
-        int right = kb.nextInt();
-        setRotors(left,middle,right);
+        //set reflectors
+        System.out.println ("pick reflector (\"beta\" or \"gamma\")");
+        try{
+            if(input.readLine().equals("beta")) {
+                setReflectorBeta();
+            }else {
+                setReflectorGamma();
+            }
+            System.out.println("Reflectors set");
+        } catch (IOException e){
+            System.out.println("ERROR: Input error");
+        }
 
-        //SETTING ROTOR LOCATION
+        //Set Rotor location
         System.out.println ("set rotor loc (0-25)\nexample input \"0 0 0\"");
-        left = kb.nextInt();
-        middle = kb.nextInt();
-        right = kb.nextInt();
-        int turns = left + middle*25 + right * 25 * 25;
-        for (int i = 0; i < turns; i++) {
-            rotate();
+        try {
+            String temp = input.readLine();
+            String location[] = temp.split("\\s");
+            int turns = Integer.parseInt(location[0]) + Integer.parseInt(location[1])*26 + Integer.parseInt(location[2])*26*26;
+            for (int i = 0; i < turns; i++) {
+                rotate();
+            }
+            System.out.println("Rotors set");
+        } catch (IOException e){
+            System.out.println("ERROR: Input error");
         }
+    }
 
-        System.out.println ("pick reflector (beta,gamma)");
-        if(kb.next().equals("beta"))
-        {
-            reflector=reflectorBeta;
-        }else {
-            reflector = reflectorGamma;
-        }
+    public static void runComandline(){
+        //configure settings
+        setUp();
 
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
+        //Encrypt or Decrypt
         System.out.println("encrypt(e) or decrypt(d)");
-        if(kb.next().equals("e"))
-            System.out.println ("your encrypted message: \n" + encrypt(message));
-        else
-            System.out.println ("your message: \n" + decrypt(message));
+        try {
+            if (input.readLine().equals("e")){
+                System.out.println("Enter message:");
+            System.out.println("your encrypted message: \n" + encrypt(input.readLine().toUpperCase()));
+            } else {
+                System.out.println("Enter message:");
+                System.out.println("your message: \n" + decrypt(input.readLine().toUpperCase()));
+            }
+        } catch (IOException e){
+            System.out.println("ERROR: Input error");
+        }
+    }
 
+    public static void runFiles(String args[]){
+        System.out.println("args = [" + args[0] + " " +args[1] + "]");
+        System.out.println(new File(args[0]).getAbsolutePath());
+        System.out.println(new File(args[1]).getAbsolutePath());
+        if(args.length > 2 ){
+            BufferedReader reader = null;
+            BufferedWriter writer = null;
 
+            try{
+                reader = new BufferedReader(new FileReader(args[0]));
+                writer = new BufferedWriter(new FileWriter(args[1]));
+                String line;
+                while ((line = reader.readLine()) != null){
+                    writer.write(encrypt(line.toUpperCase()) + '\n');
+                }
+                System.out.println("DONE");
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (reader != null)
+                        reader.close();
 
+                    if (writer != null)
+                        writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            setUp();
+            BufferedReader reader = null;
+            BufferedWriter writer = null;
+            try{
+                reader = new BufferedReader(new FileReader(args[0]));
+                writer = new BufferedWriter(new FileWriter(args[1]));
+                String line;
+                while ((line = reader.readLine()) != null){
+                    writer.write(encrypt(line.toUpperCase()) + '\n');
+                }
+                System.out.println("DONE");
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (reader != null)
+                        reader.close();
+
+                    if (writer != null)
+                        writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
